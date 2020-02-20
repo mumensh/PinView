@@ -92,6 +92,7 @@ public class PinView extends AppCompatEditText {
     private ColorStateList mLineColor;
     private int mCurLineColor = Color.BLACK;
     private int mLineWidth;
+    private PinViewType mPinViewType;
 
     private final Rect mTextRect = new Rect();
     private final RectF mItemBorderRect = new RectF();
@@ -113,6 +114,8 @@ public class PinView extends AppCompatEditText {
     private Drawable mItemBackground;
 
     private boolean mHideLineWhenFilled;
+
+    public enum PinViewType { PASSWORD, TEXT }
 
     public PinView(Context context) {
         this(context, null);
@@ -357,7 +360,7 @@ public class PinView extends AppCompatEditText {
             }
 
             if (getText().length() > i) {
-                if (isPasswordInputType(getInputType())) {
+                if (getPinViewType() == PinViewType.PASSWORD) {
                     drawCircle(canvas, i);
                 } else {
                     drawText(canvas, i);
@@ -724,6 +727,18 @@ public class PinView extends AppCompatEditText {
     public int getLineWidth() {
         return mLineWidth;
     }
+
+    /**
+     *  Set PinView Type, Password or Text
+     */
+    public void setPinViewType(@Px PinViewType pinViewType) {
+        mPinViewType = pinViewType;
+    }
+
+    /**
+     * @return Return PinView type.
+     */
+    public PinViewType getPinViewType() { return mPinViewType; }
 
     /**
      * Sets the count of items.
